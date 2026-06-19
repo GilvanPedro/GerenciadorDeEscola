@@ -5,16 +5,22 @@ import br.com.model.enums.Series;
 import br.com.model.enums.Turnos;
 
 public class Turma {
+    private int id;
     private Series serie;
     private Turnos turno;
     private NivelEnsino nivelEnsino;
     private int anoLetivo;
 
-    public Turma(Series serie, Turnos turno, NivelEnsino nivelEnsino, int anoLetivo) {
+    public Turma(int id, Series serie, Turnos turno, NivelEnsino nivelEnsino, int anoLetivo) {
+        this.id = id;
         this.serie = serie;
         this.turno = turno;
         this.nivelEnsino = nivelEnsino;
         this.anoLetivo = anoLetivo;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public Series getSerie() {

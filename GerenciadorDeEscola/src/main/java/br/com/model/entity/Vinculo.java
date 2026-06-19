@@ -4,18 +4,24 @@ import br.com.model.enums.DiaSemana;
 import br.com.model.enums.PeriodoAula;
 
 public class Vinculo {
+    private int id;
     private Professor professor;
     private Disciplina disciplina;
     private Turma turma;
     private DiaSemana diaSemana;
     private PeriodoAula periodoAula;
 
-    public Vinculo(Professor professor, Disciplina disciplina, Turma turma, DiaSemana diaSemana, PeriodoAula periodoAula) {
+    public Vinculo(int id, Professor professor, Disciplina disciplina, Turma turma, DiaSemana diaSemana, PeriodoAula periodoAula) {
+        this.id = id;
         this.professor = professor;
         this.disciplina = disciplina;
         this.turma = turma;
         this.diaSemana = diaSemana;
         this.periodoAula = periodoAula;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public Professor getProfessor() {

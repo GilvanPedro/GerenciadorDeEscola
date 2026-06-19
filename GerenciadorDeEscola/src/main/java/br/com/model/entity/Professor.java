@@ -3,34 +3,40 @@ package br.com.model.entity;
 import java.util.List;
 
 public class Professor {
-    private List<Disciplina> disciplina;
-    private List<Vinculo> vinculo;
+    private int id;
+    private List<Integer> disciplinaId;
+    private List<Integer> vinculoId;
     private String telefone;
     private String endereco;
     private String email;
 
-    public Professor(List<Disciplina> disciplina, List<Vinculo> vinculo, String telefone, String endereco, String email) {
-        this.disciplina = disciplina;
-        this.vinculo = vinculo;
+    public Professor(int id, List<Integer> disciplina, List<Integer> vinculo, String telefone, String endereco, String email) {
+        this.id = id;
+        this.disciplinaId = disciplina;
+        this.vinculoId = vinculo;
         this.telefone = telefone;
         this.endereco = endereco;
         this.email = email;
     }
 
-    public List<Disciplina> getDisciplina() {
-        return disciplina;
+    public int getId() {
+        return id;
     }
 
-    public void setDisciplina(List<Disciplina> disciplina) {
-        this.disciplina = disciplina;
+    public List<Integer> getDisciplina() {
+        return disciplinaId;
     }
 
-    public List<Vinculo> getVinculo() {
-        return vinculo;
+    public void setDisciplina(List<Integer> disciplinaId) {
+        this.disciplinaId = disciplinaId;
     }
 
-    public void setVinculo(List<Vinculo> vinculo) {
-        this.vinculo = vinculo;
+    public List<Integer> getVinculo() {
+        return vinculoId;
+    }
+
+    public void setVinculo(List<Integer> vinculoId) {
+        this.vinculoId = vinculoId;
     }
 
     public String getTelefone() {
