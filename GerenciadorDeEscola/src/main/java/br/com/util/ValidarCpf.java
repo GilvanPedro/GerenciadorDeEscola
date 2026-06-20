@@ -1,5 +1,9 @@
 package br.com.util;
 
+import br.com.model.entity.Pessoa;
+
+import java.util.List;
+
 public class ValidarCpf {
     public static boolean validarCpf(String cpf){
         cpf = cpf.replaceAll("\\D", "");
@@ -31,5 +35,9 @@ public class ValidarCpf {
         } catch(Exception e){
             return false;
         }
+    }
+
+    public static boolean validarDuplicidadeCPF(List<? extends Pessoa> lista, String cpf){
+        return lista.stream().anyMatch(p -> p.getCpf().equals(cpf));
     }
 }

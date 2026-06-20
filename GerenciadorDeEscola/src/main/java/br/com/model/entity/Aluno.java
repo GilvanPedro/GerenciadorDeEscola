@@ -55,4 +55,22 @@ public class Aluno extends Pessoa{
     public void setSerie(String serie) {
         this.serie = serie;
     }
+
+    @Override
+    public String toString() {
+
+        String responsaveis = responsavelId.stream()
+                .map(String::valueOf)
+                .reduce((a, b) -> a + "," + b)
+                .orElse("");
+
+        return matricula + ";" +
+                getNome() + ";" +
+                getCpf() + ";" +
+                getDataNascimentoFormatada() + ";" +
+                serie + ";" +
+                turmaId + ";" +
+                situacao + ";" +
+                responsaveis;
+    }
 }

@@ -1,20 +1,25 @@
 package br.com;
 
-import br.com.model.entity.Pessoa;
+import br.com.controller.AlunoController;
+import br.com.model.enums.SituacaoAluno;
+
+import java.util.List;
 
 public class Main {
 
     public static void main(String[] args) {
+        AlunoController controller = new AlunoController();
 
-        Pessoa pessoa = new Pessoa(
-                "Gilvan Pedro",
-                "123.456.789-00",
-                "17/06/2006"
+        controller.adicionar(
+                "Marcos Henrrique",
+                "71182759050",
+                "20/06/2008",
+                "3º Ano",
+                1,
+                SituacaoAluno.ATIVO,
+                List.of(1, 2)
         );
 
-        System.out.println("Pessoa cadastrada com sucesso!");
-        System.out.println("Nome: " + pessoa.getNome());
-        System.out.println("CPF: " + pessoa.getCpf());
-        System.out.println("Data de Nascimento: " + pessoa.getDataNascimentoFormatada());
+        controller.listar();
     }
 }
