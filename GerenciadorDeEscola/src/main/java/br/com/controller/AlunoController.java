@@ -11,6 +11,7 @@ public class AlunoController {
     private final AlunoService alunoService = new AlunoService();
     private GeradorMatricula geradorMatricula = new GeradorMatricula();
 
+    // Adiciona um aluno, enviando para o service para que as verificações sejam feitas antes que ele seja salvo
     public void adicionar(
             String nome,
             String cpf,
@@ -39,6 +40,7 @@ public class AlunoController {
         System.out.println("Aluno cadastrado com sucesso!");
     }
 
+    // Lista os alunos salvos
     public void listar() {
 
         List<Aluno> alunos = alunoService.listar();
@@ -56,5 +58,19 @@ public class AlunoController {
             System.out.println("Série: " + aluno.getSerie());
             System.out.println("Situação: " + aluno.getSituacao());
         }
+    }
+
+    // Editar um aluno já cadastrado
+    public void editarAluno(
+            int matricula,
+            String nome,
+            String serie,
+            int turmaId,
+            List<Integer> responsaveisId
+    ){
+
+        // CRIAR UM VERIFICADOR PARA VER SE A MATRÍCULA EXISTE
+
+        // CRIAR UM MÉTODO PARA ENCONTRAR OS ALUNOS NOS ARQUIVOS SALVOS
     }
 }

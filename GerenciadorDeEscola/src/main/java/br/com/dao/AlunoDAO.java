@@ -11,7 +11,7 @@ public class AlunoDAO {
     private final String ARQUIVO = "GerenciadorDeEscola/arquivos/alunos.txt";
     private final String MATRICULA = "GerenciadorDeEscola/arquivos/ultima_matricula.txt";
 
-    // vai listar o aluno
+    // Vai listar o aluno
     public List<Aluno> listar(){
         List<Aluno> alunos = new ArrayList<>();
 
@@ -60,8 +60,7 @@ public class AlunoDAO {
 
     // Vai salvar o valor da última matrícula
     public void salvarUltimaMatricula(int matricula) {
-        try (BufferedWriter bw = new BufferedWriter(
-                new FileWriter(MATRICULA))) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(MATRICULA))) {
 
             bw.write(String.valueOf(matricula));
 
