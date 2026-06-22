@@ -86,6 +86,28 @@ public class AlunoDAO {
         return 0;
     }
 
+    // Remove um aluno pelo número de matrícula
+    public void excluir(int matricula) {
+        List<Aluno> alunos = listar();
+
+        alunos.removeIf(a -> a.getMatricula() == matricula);
+        salvar(alunos);
+    }
+
+    // Edita as informações de um aluno já cadastrado
+    public void editar(Aluno alunoAtualizado) {
+        List<Aluno> alunos = listar();
+
+        for (int i = 0; i < alunos.size(); i++) {
+            if (alunos.get(i).getMatricula() == alunoAtualizado.getMatricula()) {
+                alunos.set(i, alunoAtualizado);
+                break;
+            }
+        }
+
+        salvar(alunos);
+    }
+
     private List<Integer> converterResponsaveis(String texto) {
 
         List<Integer> ids = new ArrayList<>();

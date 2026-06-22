@@ -3,6 +3,7 @@ package br.com.controller;
 import br.com.model.entity.Aluno;
 import br.com.model.enums.SituacaoAluno;
 import br.com.service.AlunoService;
+import br.com.util.BuscarAluno;
 import br.com.util.GeradorMatricula;
 
 import java.util.List;
@@ -66,11 +67,43 @@ public class AlunoController {
             String nome,
             String serie,
             int turmaId,
+            SituacaoAluno situacao,
             List<Integer> responsaveisId
-    ){
+    ) {
+        Aluno alunoExistente = BuscarAluno.buscarPorMatricula(matricula);
 
-        // CRIAR UM VERIFICADOR PARA VER SE A MATRÍCULA EXISTE
+        if (alunoExistente == null) {
+            System.out.println("Aluno com matrícula " + matricula + " não encontrado.");
+            return;
+        }
 
-        // CRIAR UM MÉTODO PARA ENCONTRAR OS ALUNOS NOS ARQUIVOS SALVOS
+        Aluno alunoAtualizado = new Aluno(
+                matricula,
+                nome,
+                alunoExistente.getCpf(),                     // CPF não pode ser alterado
+                alunoExistente.getDataNascimentoFormatada(), // data não pode ser alterada
+                serie,
+                turmaId,
+                situacao,
+                responsaveisId
+        );
+
+        alunoService.editarAluno(alunoAtualizado);
+
+        System.out.println("Aluno atualizado com sucesso!");
+    }
+
+    // Excluir um aluno pelo número de matrícula
+    public void excluirAluno(int matricula) {
+        Aluno alunoExistente = BuscarAluno.buscarPorMatricula(matricula);
+
+        if (alunoExistente == null) {
+            System.out.println("Aluno com matrícula " + matricula + " não encontrado.");
+            return;
+        }
+
+        alunoService.excluirAluno(matricula);
+
+        System.out.println("Aluno removido com sucesso!");
     }
 }

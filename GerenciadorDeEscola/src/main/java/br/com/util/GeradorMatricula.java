@@ -13,15 +13,23 @@ public class GeradorMatricula {
 
     public int gerarMatricula() {
 
-        String anoCurto = LocalDate.now().format(DateTimeFormatter.ofPattern("yy"));
+        String anoAtual = LocalDate.now().format(DateTimeFormatter.ofPattern("yy"));
         int ultimaMatricula = alunoDAO.obterUltimaMatricula();
 
-        // Pega só os 3 últimos dígitos (sequencial) da última matrícula e soma 1
-        int proximoSequencial = (ultimaMatricula % 1000) + 1;
+        int proximoSequencial = 1;
 
-        // Garante no mínimo 3 algarismos (1 -> "001", 23 -> "023", 456 -> "456")
-        String sequencialFormatado = String.format("%03d", proximoSequencial);
-        String matricula = anoCurto + sequencialFormatado;
+        if (ultimaMatricula > 0) {
+
+            String ultimaMatriculaStr = String.valueOf(ultimaMatricula);
+            String anoUltimaMatricula = ultimaMatriculaStr.substring(0, 2);
+
+            if (anoAtual.equals(anoUltimaMatricula)) {
+                String sequencialStr = ultimaMatriculaStr.substring(2);
+                proximoSequencial = Integer.parseInt(sequencialStr) + 1;
+            }
+        }
+
+        String matricula = anoAtual + String.format("%03d", proximoSequencial);
 
         return Integer.parseInt(matricula);
     }

@@ -10,15 +10,16 @@ public class Main {
     public static void main(String[] args) {
         AlunoController controller = new AlunoController();
 
-        controller.adicionar(
-                "Marcos Henrrique",
-                "71182759050",
-                "20/06/2008",
-                "3º Ano",
-                1,
-                SituacaoAluno.ATIVO,
-                List.of(1, 2)
+        controller.editarAluno(
+                26002,
+                "João Silva",        // nome
+                "9º Ano",           // série
+                2,                  // turmaId
+                SituacaoAluno.ATIVO, // situação
+                List.of(1, 2)       // ids dos responsáveis
         );
+
+        controller.excluirAluno(26002);
 
         controller.listar();
     }

@@ -47,4 +47,42 @@ public class AlunoService {
     public List<Aluno> listar() {
         return alunoDAO.listar();
     }
+
+    // Editar o aluno
+    public void editarAluno(Aluno alunoAtualizado) {
+        if (alunoAtualizado.getNome() == null || alunoAtualizado.getNome().isBlank()) {
+            throw new IllegalArgumentException(
+                    "Erro: nome do aluno não pode ser vazio."
+            );
+        }
+
+        if (alunoAtualizado.getSerie() == null || alunoAtualizado.getSerie().isBlank()) {
+            throw new IllegalArgumentException(
+                    "Erro: série não pode ser vazia."
+            );
+        }
+
+        if (alunoAtualizado.getResponsavelId() == null || alunoAtualizado.getResponsavelId().isEmpty()) {
+            throw new IllegalArgumentException(
+                    "Erro: aluno deve ter ao menos um responsável."
+            );
+        }
+
+        alunoDAO.editar(alunoAtualizado);
+    }
+
+    // Exclui o aluno se ele existir
+    public void excluirAluno(int matricula) {
+        List<Aluno> alunos = alunoDAO.listar();
+
+        boolean existe = alunos.stream()
+                .anyMatch(a -> a.getMatricula() == matricula);
+
+        if (!existe) {
+            System.out.println("Erro: aluno com matrícula " + matricula + " não encontrado.");
+            return;
+        }
+
+        alunoDAO.excluir(matricula);
+    }
 }
