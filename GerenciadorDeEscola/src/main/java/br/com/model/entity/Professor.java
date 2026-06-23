@@ -62,4 +62,17 @@ public class Professor {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    @Override
+    public String toString() {
+        String disciplinas = disciplinaId.stream()
+                .map(String::valueOf)
+                .collect(java.util.stream.Collectors.joining(","));
+
+        String vinculos = vinculoId.stream()
+                .map(String::valueOf)
+                .collect(java.util.stream.Collectors.joining(","));
+
+        return id + ";" + disciplinas + ";" + vinculos + ";" + telefone + ";" + endereco + ";" + email;
+    }
 }

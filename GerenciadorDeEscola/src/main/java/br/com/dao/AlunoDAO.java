@@ -12,7 +12,7 @@ public class AlunoDAO {
     private final String MATRICULA = "GerenciadorDeEscola/arquivos/ultima_matricula.txt";
 
     // Vai listar o aluno
-    public List<Aluno> listar(){
+    public List<Aluno> listarAluno(){
         List<Aluno> alunos = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(ARQUIVO))) {
@@ -88,7 +88,7 @@ public class AlunoDAO {
 
     // Remove um aluno pelo número de matrícula
     public void excluir(int matricula) {
-        List<Aluno> alunos = listar();
+        List<Aluno> alunos = listarAluno();
 
         alunos.removeIf(a -> a.getMatricula() == matricula);
         salvar(alunos);
@@ -96,7 +96,7 @@ public class AlunoDAO {
 
     // Edita as informações de um aluno já cadastrado
     public void editar(Aluno alunoAtualizado) {
-        List<Aluno> alunos = listar();
+        List<Aluno> alunos = listarAluno();
 
         for (int i = 0; i < alunos.size(); i++) {
             if (alunos.get(i).getMatricula() == alunoAtualizado.getMatricula()) {

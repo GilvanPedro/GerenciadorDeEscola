@@ -12,7 +12,7 @@ public class AlunoService {
 
     public void adicionar(Aluno aluno) {
 
-        List<Aluno> alunos = alunoDAO.listar();
+        List<Aluno> alunos = alunoDAO.listarAluno();
 
         // Validar se a matrícula está repetida
         for(Aluno a : alunos){
@@ -45,7 +45,7 @@ public class AlunoService {
 
     // Listar os Alunos
     public List<Aluno> listar() {
-        return alunoDAO.listar();
+        return alunoDAO.listarAluno();
     }
 
     // Editar o aluno
@@ -73,7 +73,7 @@ public class AlunoService {
 
     // Exclui o aluno se ele existir
     public void excluirAluno(int matricula) {
-        List<Aluno> alunos = alunoDAO.listar();
+        List<Aluno> alunos = alunoDAO.listarAluno();
 
         boolean existe = alunos.stream()
                 .anyMatch(a -> a.getMatricula() == matricula);

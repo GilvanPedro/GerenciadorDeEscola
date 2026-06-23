@@ -10,7 +10,7 @@ public class BuscarAluno {
 
     // Vai buscar o aluno pela matrícula, com 2 blocos de buscas sequenciais, um para o ano, e outro para o resto da matrícula
     public static Aluno buscarPorMatricula(int matricula) {
-        List<Aluno> alunos = alunoDAO.listar();
+        List<Aluno> alunos = alunoDAO.listarAluno();
 
         String matriculaStr = String.valueOf(matricula);
         int anoBuscado = Integer.parseInt(matriculaStr.substring(0, 2));
