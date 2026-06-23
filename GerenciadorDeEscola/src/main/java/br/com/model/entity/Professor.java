@@ -2,7 +2,7 @@ package br.com.model.entity;
 
 import java.util.List;
 
-public class Professor {
+public class Professor extends Pessoa{
     private int id;
     private List<Integer> disciplinaId;
     private List<Integer> vinculoId;
@@ -10,10 +10,11 @@ public class Professor {
     private String endereco;
     private String email;
 
-    public Professor(int id, List<Integer> disciplina, List<Integer> vinculo, String telefone, String endereco, String email) {
+    public Professor(String nome, String cpf, String dataNascimentoTexto, int id, List<Integer> disciplinaId, List<Integer> vinculoId, String telefone, String endereco, String email) {
+        super(nome, cpf, dataNascimentoTexto);
         this.id = id;
-        this.disciplinaId = disciplina;
-        this.vinculoId = vinculo;
+        this.disciplinaId = disciplinaId;
+        this.vinculoId = vinculoId;
         this.telefone = telefone;
         this.endereco = endereco;
         this.email = email;
@@ -73,6 +74,8 @@ public class Professor {
                 .map(String::valueOf)
                 .collect(java.util.stream.Collectors.joining(","));
 
-        return id + ";" + disciplinas + ";" + vinculos + ";" + telefone + ";" + endereco + ";" + email;
+        return getNome() + ";" + getCpf() + ";" + getDataNascimento() + ";"
+                + id + ";" + disciplinas + ";" + vinculos + ";"
+                + telefone + ";" + endereco + ";" + email;
     }
 }

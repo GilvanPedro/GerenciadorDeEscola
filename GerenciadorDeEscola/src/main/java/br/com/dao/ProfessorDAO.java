@@ -21,12 +21,15 @@ public class ProfessorDAO {
                 String[] dados = linha.split(";");
 
                 Professor professor = new Professor(
-                        Integer.parseInt(dados[0]),   // id
-                        converterLista(dados[1]),      // disciplinaId
-                        converterLista(dados[2]),      // vinculoId
-                        dados[3],                      // telefone
-                        dados[4],                      // endereco
-                        dados[5]                       // email
+                        dados[0],                      // nome
+                        dados[1],                      // cpf
+                        dados[2],                      // dataNascimentoTexto
+                        Integer.parseInt(dados[3]),    // id
+                        converterLista(dados[4]),      // disciplinaId
+                        converterLista(dados[5]),      // vinculoId
+                        dados[6],                      // telefone
+                        dados[7],                      // endereco
+                        dados[8]                       // email
                 );
 
                 professores.add(professor);
@@ -48,15 +51,6 @@ public class ProfessorDAO {
                 bw.newLine();
             }
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    // Salva o último identificador gerado
-    public void salvarUltimoIdentificador(int id) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(IDENTIFICADOR))) {
-            bw.write(String.valueOf(id));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -103,5 +97,10 @@ public class ProfessorDAO {
             ids.add(Integer.parseInt(parte.trim()));
         }
         return ids;
+    }
+
+    // Retorna o caminho de onde tá salvando o ultimo identificador
+    public String caminhoUltimoIdentificador(){
+        return IDENTIFICADOR;
     }
 }
