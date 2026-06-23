@@ -2,14 +2,17 @@ package br.com.controller;
 
 import br.com.dao.ProfessorDAO;
 import br.com.model.entity.Professor;
+import br.com.service.ProfessorService;
 import br.com.util.GerarId;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public class ProfessorController {
+    private ProfessorService professorService = new ProfessorService();
+
     private ProfessorDAO professorDAO = new ProfessorDAO();
 
+    // Mandando o professor para o service para as verificações finais antes de adicionar
     public void adicionarProfessor(
         String nome,
         String cpf,

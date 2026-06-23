@@ -22,12 +22,4 @@ public class GerarId {
         }
         return 0;
     }
-
-    private static void salvarId(String caminhoArquivo, int novoId) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(caminhoArquivo))) {
-            bw.write(String.valueOf(novoId));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }

@@ -90,6 +90,15 @@ public class ProfessorDAO {
         salvar(professores);
     }
 
+    // Salvar o ultimo id
+    public void salvarUltimoId() {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(IDENTIFICADOR))) {
+            bw.write(String.valueOf(obterUltimoIdentificador() + 1));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     // Converte "1,2,3" → List<Integer> (equivalente ao converterResponsaveis do Aluno)
     private List<Integer> converterLista(String texto) {
         List<Integer> ids = new ArrayList<>();
