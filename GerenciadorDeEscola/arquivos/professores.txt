@@ -1,0 +1,2 @@
+Carlos Silva;55420112094;15/03/1985;1;1,2;1;(62) 99999-1234;Rua das Flores, 100 - Goiânia/GO;carlos.silva@escola.com
+Carlos Silva;55235297024;15/03/1985;2;1,2;1;(62) 99999-1234;Rua das Flores, 100 - Goiânia/GO;carlos.silva@escola.com

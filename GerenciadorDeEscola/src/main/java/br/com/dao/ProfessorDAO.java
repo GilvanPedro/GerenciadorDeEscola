@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProfessorDAO {
-    private final String ARQUIVO = "GerenciadorEscola/arquivos/professores.txt";
-    private final String IDENTIFICADOR = "GerenciadorEscola/arquivos/ultimo_identificador_professor.txt";
+    private final String ARQUIVO = "GerenciadorDeEscola/arquivos/professores.txt";
+    private final String IDENTIFICADOR = "GerenciadorDeEscola/arquivos/ultimo_identificador_professor.txt";
 
     // Listar os professores cadastrados
     public List<Professor> listarProfessor() {
@@ -44,13 +44,22 @@ public class ProfessorDAO {
 
     // Salva a lista de professores no arquivo
     public void salvar(List<Professor> professores) {
+        garantirDiretorio(ARQUIVO); // <-- adiciona essa linha
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(ARQUIVO))) {
-
             for (Professor p : professores) {
                 bw.write(p.toString());
                 bw.newLine();
             }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
+    // Salva o ultimo id do professor
+    public void salvarUltimoId() {
+        garantirDiretorio(IDENTIFICADOR); // <-- e essa linha
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(IDENTIFICADOR))) {
+            bw.write(String.valueOf(obterUltimoIdentificador() + 1));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -90,15 +99,6 @@ public class ProfessorDAO {
         salvar(professores);
     }
 
-    // Salvar o ultimo id
-    public void salvarUltimoId() {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(IDENTIFICADOR))) {
-            bw.write(String.valueOf(obterUltimoIdentificador() + 1));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     // Converte "1,2,3" → List<Integer> (equivalente ao converterResponsaveis do Aluno)
     private List<Integer> converterLista(String texto) {
         List<Integer> ids = new ArrayList<>();
@@ -111,5 +111,14 @@ public class ProfessorDAO {
     // Retorna o caminho de onde tá salvando o ultimo identificador
     public String caminhoUltimoIdentificador(){
         return IDENTIFICADOR;
+    }
+
+    // Garante que o diretório existe antes de salvar
+    private void garantirDiretorio(String caminhoArquivo) {
+        File arquivo = new File(caminhoArquivo);
+        File diretorio = arquivo.getParentFile();
+        if (diretorio != null && !diretorio.exists()) {
+            diretorio.mkdirs(); // cria todas as pastas necessárias
+        }
     }
 }

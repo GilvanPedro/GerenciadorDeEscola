@@ -20,6 +20,19 @@ public class Professor extends Pessoa{
         this.email = email;
     }
 
+    public Professor(String nome, String cpf, String dataNascimentoTexto, List<Integer> disciplinaId, List<Integer> vinculoId, String telefone, String endereco, String email) {
+        super(nome, cpf, dataNascimentoTexto);
+        this.disciplinaId = disciplinaId;
+        this.vinculoId = vinculoId;
+        this.telefone = telefone;
+        this.endereco = endereco;
+        this.email = email;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }
@@ -74,7 +87,7 @@ public class Professor extends Pessoa{
                 .map(String::valueOf)
                 .collect(java.util.stream.Collectors.joining(","));
 
-        return getNome() + ";" + getCpf() + ";" + getDataNascimento() + ";"
+        return getNome() + ";" + getCpf() + ";" + getDataNascimentoFormatada() + ";"
                 + id + ";" + disciplinas + ";" + vinculos + ";"
                 + telefone + ";" + endereco + ";" + email;
     }
