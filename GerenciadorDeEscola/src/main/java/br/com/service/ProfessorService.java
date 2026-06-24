@@ -71,6 +71,13 @@ public class ProfessorService {
             );
         }
 
+        // O professor precisa ter no mínimo 1 vínculo
+        if (professorAtualizado.getVinculo() == null || professorAtualizado.getVinculo().isEmpty()) {
+            throw new IllegalArgumentException(
+                    "Erro: Professor não pode estar sem vínculos."
+            );
+        }
+
         professorDAO.editar(professorAtualizado);
     }
 

@@ -83,6 +83,7 @@ public class ProfessorDAO {
     // Converte "1,2,3" → List<Integer> (equivalente ao converterResponsaveis do Aluno)
     private List<Integer> converterLista(String texto) {
         List<Integer> ids = new ArrayList<>();
+        if (texto == null || texto.isBlank()) return ids; // ← linha adicionada
         for (String parte : texto.split(",")) {
             ids.add(Integer.parseInt(parte.trim()));
         }
