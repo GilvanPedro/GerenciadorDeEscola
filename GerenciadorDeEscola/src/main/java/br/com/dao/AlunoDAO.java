@@ -2,6 +2,7 @@ package br.com.dao;
 
 import br.com.model.entity.Aluno;
 import br.com.model.enums.SituacaoAluno;
+import br.com.util.GarantirRepositorio;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -10,6 +11,9 @@ import java.util.List;
 public class AlunoDAO {
     private final String ARQUIVO = "GerenciadorDeEscola/arquivos/alunos.txt";
     private final String MATRICULA = "GerenciadorDeEscola/arquivos/ultima_matricula.txt";
+
+    private GarantirRepositorio garantirDiretorio = new GarantirRepositorio();
+
 
     // Vai listar o aluno
     public List<Aluno> listarAluno(){
@@ -46,13 +50,13 @@ public class AlunoDAO {
 
     // Salva o aluno no arquivo
     public void salvar(List<Aluno> pessoas) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(ARQUIVO))) {
+        garantirDiretorio.criarDiretorio(ARQUIVO);
 
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(ARQUIVO))) {
             for (Aluno a : pessoas) {
                 bw.write(a.toString());
                 bw.newLine();
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -60,10 +64,10 @@ public class AlunoDAO {
 
     // Vai salvar o valor da última matrícula
     public void salvarUltimaMatricula(int matricula) {
+        garantirDiretorio.criarDiretorio(ARQUIVO);
+
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(MATRICULA))) {
-
             bw.write(String.valueOf(matricula));
-
         } catch (IOException e) {
             e.printStackTrace();
         }
