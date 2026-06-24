@@ -10,23 +10,31 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        AlunoController controller = new AlunoController();
-
-        controller.editarAluno(
-                26002,
-                "João Silva",        // nome
-                "9º Ano",           // série
-                2,                  // turmaId
-                SituacaoAluno.ATIVO, // situação
-                List.of(1, 2)       // ids dos responsáveis
-        );
-
-        controller.excluirAluno(26002);
-
-        controller.listar();
 
         ProfessorController professorController = new ProfessorController();
         ProfessorDAO dao = new ProfessorDAO();
+
+//        professorController.adicionarProfessor(
+//                "Carlos Eduardo Mendes",
+//                "52998224725",
+//                "12/04/1994",
+//                List.of(1, 3, 5),
+//                List.of(1),
+//                "(62) 99876-5432",
+//                "Rua das Palmeiras, 123, Setor Bueno, Goiânia - GO",
+//                "carlos.mendes@escola.com.br"
+//        );
+
+        professorController.editarProfessor(
+                3,
+                "Carlos Eduardo",
+                "12/04/1998",
+                List.of(1, 3, 9),
+                List.of(1, 7),
+                "(62) 99876-5432",
+                "Rua das Palmeiras, 123, Setor Bueno, Goiânia - GO",
+                "carlos.mendes@gmail.com"
+        );
 
         System.out.println("\n======= Lista de Professores =======");
         professorController.listar();

@@ -4,6 +4,7 @@ import br.com.dao.ProfessorDAO;
 import br.com.model.entity.Aluno;
 import br.com.model.entity.Professor;
 import br.com.service.ProfessorService;
+import br.com.util.BuscaPorId;
 import br.com.util.GerarId;
 
 import java.util.List;
@@ -13,7 +14,7 @@ public class ProfessorController {
 
     private ProfessorDAO professorDAO = new ProfessorDAO();
 
-    // Listar Professores
+    // Listar os Professores
     public void listar() {
         List<Professor> professores = professorService.listarProfessores();
 
@@ -59,5 +60,40 @@ public class ProfessorController {
         );
 
         professorService.adicionar(professor);
+    }
+
+    // Editar o Professor e enviar para as verificações
+    public void editarProfessor(
+            int id,
+            String nome,
+            String dataNascimento,
+            List<Integer> disciplinasId,
+            List<Integer> vinculosId,
+            String telefone,
+            String endereco,
+            String email
+    ){
+        Professor professorExistente = BuscaPorId.buscarPorId(professorDAO.listarProfessor(), id);
+
+        if(professorExistente == null){
+            throw new IllegalArgumentException (
+                    "Professor com o id: " + id + " não encontrado."
+            );
+        }
+
+        Professor professorAtualizado = new Professor(
+                nome,
+                professorExistente.getCpf(),
+                dataNascimento,
+                id,
+                disciplinasId,
+                vinculosId,
+                telefone,
+                endereco,
+                email
+        );
+
+        professorService.editarProfessor(professorAtualizado);
+
     }
 }

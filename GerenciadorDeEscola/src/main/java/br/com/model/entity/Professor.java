@@ -1,8 +1,10 @@
 package br.com.model.entity;
 
+import br.com.model.Identificador;
+
 import java.util.List;
 
-public class Professor extends Pessoa{
+public class Professor extends Pessoa implements Identificador {
     private int id;
     private List<Integer> disciplinaId;
     private List<Integer> vinculoId;
@@ -33,6 +35,7 @@ public class Professor extends Pessoa{
         this.id = id;
     }
 
+    @Override
     public int getId() {
         return id;
     }

@@ -1,8 +1,10 @@
 package br.com.model.entity;
 
+import br.com.model.Identificador;
+
 import java.util.List;
 
-public class Responsavel extends Pessoa{
+public class Responsavel extends Pessoa implements Identificador {
     private int id;
     private String endereco;
     private String telefone;
@@ -16,6 +18,7 @@ public class Responsavel extends Pessoa{
         this.alunosId = alunosId;
     }
 
+    @Override
     public int getId() {
         return id;
     }

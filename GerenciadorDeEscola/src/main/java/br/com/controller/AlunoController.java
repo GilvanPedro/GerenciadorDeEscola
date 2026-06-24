@@ -73,8 +73,9 @@ public class AlunoController {
         Aluno alunoExistente = BuscarAluno.buscarPorMatricula(matricula);
 
         if (alunoExistente == null) {
-            System.out.println("Aluno com matrícula " + matricula + " não encontrado.");
-            return;
+            throw new IllegalArgumentException (
+                    "Aluno com matrícula " + matricula + " não encontrado."
+            );
         }
 
         Aluno alunoAtualizado = new Aluno(
@@ -89,8 +90,6 @@ public class AlunoController {
         );
 
         alunoService.editarAluno(alunoAtualizado);
-
-        System.out.println("Aluno atualizado com sucesso!");
     }
 
     // Excluir um aluno pelo número de matrícula

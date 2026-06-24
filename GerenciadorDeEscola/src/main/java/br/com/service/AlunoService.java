@@ -37,6 +37,13 @@ public class AlunoService {
             );
         }
 
+        // Validar se o aluno tem responsáveis cadastrados
+        if (aluno.getResponsavelId() == null || aluno.getResponsavelId().isEmpty()) {
+            throw new IllegalArgumentException(
+                    "Erro: aluno deve ter ao menos um responsável."
+            );
+        }
+
         // Salvamento dos Alunos
         alunos.add(aluno);
         alunoDAO.salvar(alunos);
@@ -79,8 +86,9 @@ public class AlunoService {
                 .anyMatch(a -> a.getMatricula() == matricula);
 
         if (!existe) {
-            System.out.println("Erro: aluno com matrícula " + matricula + " não encontrado.");
-            return;
+            throw new IllegalArgumentException(
+                    "Erro: aluno com matrícula: " + matricula + " não encontrado."
+            );
         }
 
         alunoDAO.excluir(matricula);

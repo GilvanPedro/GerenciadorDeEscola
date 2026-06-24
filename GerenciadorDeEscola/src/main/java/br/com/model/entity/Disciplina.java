@@ -1,8 +1,9 @@
 package br.com.model.entity;
 
+import br.com.model.Identificador;
 import br.com.model.enums.NivelEnsino;
 
-public class Disciplina {
+public class Disciplina implements Identificador {
     private int id;
     private String disciplina;
     private NivelEnsino nivelEnsino;
@@ -13,6 +14,7 @@ public class Disciplina {
         this.nivelEnsino = nivelEnsino;
     }
 
+    @Override
     public int getId() {
         return id;
     }

@@ -1,10 +1,11 @@
 package br.com.model.entity;
 
+import br.com.model.Identificador;
 import br.com.model.enums.NivelEnsino;
 import br.com.model.enums.Series;
 import br.com.model.enums.Turnos;
 
-public class Turma {
+public class Turma implements Identificador {
     private int id;
     private Series serie;
     private Turnos turno;
@@ -19,6 +20,7 @@ public class Turma {
         this.anoLetivo = anoLetivo;
     }
 
+    @Override
     public int getId() {
         return id;
     }

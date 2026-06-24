@@ -1,9 +1,10 @@
 package br.com.model.entity;
 
+import br.com.model.Identificador;
 import br.com.model.enums.DiaSemana;
 import br.com.model.enums.PeriodoAula;
 
-public class Vinculo {
+public class Vinculo implements Identificador {
     private int id;
     private Professor professor;
     private Disciplina disciplina;
@@ -20,6 +21,7 @@ public class Vinculo {
         this.periodoAula = periodoAula;
     }
 
+    @Override
     public int getId() {
         return id;
     }
