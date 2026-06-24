@@ -10,6 +10,7 @@ public class AlunoService {
 
     private final AlunoDAO alunoDAO = new AlunoDAO();
 
+    // Verificar as informações e depois salvar no arquivo
     public void adicionar(Aluno aluno) {
 
         List<Aluno> alunos = alunoDAO.listarAluno();

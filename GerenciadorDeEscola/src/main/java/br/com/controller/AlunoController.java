@@ -94,13 +94,6 @@ public class AlunoController {
 
     // Excluir um aluno pelo número de matrícula
     public void excluirAluno(int matricula) {
-        Aluno alunoExistente = BuscarAluno.buscarPorMatricula(matricula);
-
-        if (alunoExistente == null) {
-            System.out.println("Aluno com matrícula " + matricula + " não encontrado.");
-            return;
-        }
-
         alunoService.excluirAluno(matricula);
 
         System.out.println("Aluno removido com sucesso!");

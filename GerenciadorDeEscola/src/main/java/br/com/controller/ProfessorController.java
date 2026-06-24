@@ -94,6 +94,10 @@ public class ProfessorController {
         );
 
         professorService.editarProfessor(professorAtualizado);
+    }
 
+    // Manda o
+    public void excluirProfessor(int id){
+        professorService.excluirProfessor(id);
     }
 }
