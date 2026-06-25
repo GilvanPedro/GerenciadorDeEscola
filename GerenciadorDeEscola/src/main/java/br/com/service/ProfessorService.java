@@ -12,22 +12,28 @@ public class ProfessorService {
     private final ProfessorDAO professorDAO = new ProfessorDAO();
 
     // Verificações e salvamento do professor
-    public void adicionar(Professor professor) {
+    public void adicionarProfessor(Professor professor) {
         List<Professor> professores = professorDAO.listarProfessor();
 
         // Validar cpf
         if (!ValidarCpf.validarCpf(professor.getCpf())) {
-            throw new IllegalArgumentException("O CPF não é válido");
+            throw new IllegalArgumentException(
+                    "Erro: O CPF não é válido"
+            );
         }
 
         // Verificar duplicidade cpf
         if (ValidarCpf.validarDuplicidadeCPF(professores, professor.getCpf())) {
-            throw new IllegalArgumentException("O CPF já está cadastrado!");
+            throw new IllegalArgumentException(
+                    "Erro: O CPF já está cadastrado!"
+            );
         }
 
         // Validar email
         if(!ValidarEmail.validarEmail(professor.getEmail())){
-            throw new IllegalArgumentException("O email está inválido!");
+            throw new IllegalArgumentException(
+                    "Erro: O email está inválido!"
+            );
         }
 
         // O professor precisa ter no mínimo 1 disciplina
@@ -61,7 +67,9 @@ public class ProfessorService {
 
         // Validar email
         if(!ValidarEmail.validarEmail(professorAtualizado.getEmail())){
-            throw new IllegalArgumentException("O email está inválido!");
+            throw new IllegalArgumentException(
+                    "Erro: O email está inválido!"
+            );
         }
 
         // O professor precisa ter no mínimo 1 disciplina

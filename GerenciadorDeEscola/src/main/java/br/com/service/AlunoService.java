@@ -11,7 +11,7 @@ public class AlunoService {
     private final AlunoDAO alunoDAO = new AlunoDAO();
 
     // Verificar as informações e depois salvar no arquivo
-    public void adicionar(Aluno aluno) {
+    public void adicionarAluno(Aluno aluno) {
 
         List<Aluno> alunos = alunoDAO.listarAluno();
 
@@ -19,7 +19,7 @@ public class AlunoService {
         for(Aluno a : alunos){
             if(a.getMatricula() == aluno.getMatricula()){
                 throw new IllegalArgumentException(
-                        "A matrícula já está cadastrada, tente novamente, se o erro persistir, entre em contato com algum desenvolvedor"
+                        "Erro: A matrícula já está cadastrada, tente novamente, se o erro persistir, entre em contato com algum desenvolvedor"
                 );
             }
         }
@@ -27,14 +27,14 @@ public class AlunoService {
         // Validar o Cpf
         if(!ValidarCpf.validarCpf(aluno.getCpf())){
             throw new IllegalArgumentException(
-                    "O CPF é inválido"
+                    "Erro: O CPF é inválido"
             );
         }
 
         // Verificar por Cpf já cadastrado
         if(ValidarCpf.validarDuplicidadeCPF(alunos, aluno.getCpf())){
             throw new IllegalArgumentException(
-                    "O CPF já está cadastrado"
+                    "Erro: O CPF já está cadastrado"
             );
         }
 
@@ -52,7 +52,7 @@ public class AlunoService {
     }
 
     // Listar os Alunos
-    public List<Aluno> listar() {
+    public List<Aluno> listarAlunos() {
         return alunoDAO.listarAluno();
     }
 

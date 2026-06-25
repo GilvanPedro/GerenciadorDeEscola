@@ -19,8 +19,9 @@ public class ProfessorController {
         List<Professor> professores = professorService.listarProfessores();
 
         if (professores.isEmpty()) {
-            System.out.println("Nenhum professor cadastrado.");
-            return;
+            throw new IllegalArgumentException(
+                    "Erro: Nenhum professor cadastrado"
+            );
         }
 
         for (Professor professor : professores) {
@@ -59,7 +60,7 @@ public class ProfessorController {
                 email
         );
 
-        professorService.adicionar(professor);
+        professorService.adicionarProfessor(professor);
     }
 
     // Editar o Professor e enviar para as verificações
@@ -77,7 +78,7 @@ public class ProfessorController {
 
         if(professorExistente == null){
             throw new IllegalArgumentException (
-                    "Professor com o id: " + id + " não encontrado."
+                    "Erro: Professor com o id: " + id + " não encontrado."
             );
         }
 
@@ -96,7 +97,7 @@ public class ProfessorController {
         professorService.editarProfessor(professorAtualizado);
     }
 
-    // Manda o
+    // Manda para o service ver se pode excluir o professor
     public void excluirProfessor(int id){
         professorService.excluirProfessor(id);
     }

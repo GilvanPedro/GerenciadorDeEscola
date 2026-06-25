@@ -76,6 +76,11 @@ public class DisciplinaDAO {
         salvar(disciplinas);
     }
 
+    // Caminho de onde tá salvando o id
+    public String caminhoUltimoId(){
+        return IDENTIFICADOR;
+    }
+
     // Converter de volta para os Enums
     public NivelEnsino converterEnum(String texto) {
         return NivelEnsino.valueOf(texto.trim().toUpperCase());

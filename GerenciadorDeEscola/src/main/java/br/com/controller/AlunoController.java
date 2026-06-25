@@ -36,7 +36,7 @@ public class AlunoController {
                 responsaveis
         );
 
-        alunoService.adicionar(aluno);
+        alunoService.adicionarAluno(aluno);
 
         System.out.println("Aluno cadastrado com sucesso!");
     }
@@ -44,11 +44,12 @@ public class AlunoController {
     // Lista os alunos salvos
     public void listar() {
 
-        List<Aluno> alunos = alunoService.listar();
+        List<Aluno> alunos = alunoService.listarAlunos();
 
         if (alunos.isEmpty()) {
-            System.out.println("Nenhum aluno cadastrado.");
-            return;
+            throw new IllegalArgumentException(
+                    "Erro: Nenhum aluno cadastrado"
+            );
         }
 
         for (Aluno aluno : alunos) {
@@ -74,14 +75,14 @@ public class AlunoController {
 
         if (alunoExistente == null) {
             throw new IllegalArgumentException (
-                    "Aluno com matrícula " + matricula + " não encontrado."
+                    "Erro: Aluno com matrícula " + matricula + " não encontrado."
             );
         }
 
         Aluno alunoAtualizado = new Aluno(
                 matricula,
                 nome,
-                alunoExistente.getCpf(),                     // CPF não pode ser alterado
+                alunoExistente.getCpf(), // CPF não pode ser alterado
                 alunoExistente.getDataNascimentoFormatada(), // data não pode ser alterada
                 serie,
                 turmaId,
@@ -92,10 +93,8 @@ public class AlunoController {
         alunoService.editarAluno(alunoAtualizado);
     }
 
-    // Excluir um aluno pelo número de matrícula
+    // Manda para o service para excluir um aluno pelo número de matrícula
     public void excluirAluno(int matricula) {
         alunoService.excluirAluno(matricula);
-
-        System.out.println("Aluno removido com sucesso!");
     }
 }

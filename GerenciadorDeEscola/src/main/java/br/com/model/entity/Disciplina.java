@@ -14,9 +14,18 @@ public class Disciplina implements Identificador {
         this.nivelEnsino = nivelEnsino;
     }
 
+    public Disciplina(String disciplina, NivelEnsino nivelEnsino) {
+        this.disciplina = disciplina;
+        this.nivelEnsino = nivelEnsino;
+    }
+
     @Override
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getDisciplina() {
