@@ -13,7 +13,7 @@ public class AlunoController {
     private GeradorMatricula geradorMatricula = new GeradorMatricula();
 
     // Adiciona um aluno, enviando para o service para que as verificações sejam feitas antes que ele seja salvo
-    public void adicionar(
+    public void adicionarAluno(
             String nome,
             String cpf,
             String dataNascimento,
@@ -42,7 +42,7 @@ public class AlunoController {
     }
 
     // Lista os alunos salvos
-    public void listar() {
+    public void listarAlunos() {
 
         List<Aluno> alunos = alunoService.listarAlunos();
 

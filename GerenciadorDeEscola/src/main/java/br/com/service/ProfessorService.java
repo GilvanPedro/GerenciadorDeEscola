@@ -2,6 +2,7 @@ package br.com.service;
 
 import br.com.dao.ProfessorDAO;
 import br.com.model.entity.Professor;
+import br.com.util.BuscaPorId;
 import br.com.util.GerarId;
 import br.com.util.ValidarCpf;
 import br.com.util.ValidarEmail;
@@ -59,6 +60,7 @@ public class ProfessorService {
 
     // Verificações da edição do professor e salvamento dele
     public void editarProfessor(Professor professorAtualizado){
+
         if (professorAtualizado.getNome() == null || professorAtualizado.getNome().isBlank()) {
             throw new IllegalArgumentException(
                     "Erro: nome do professor não pode ser vazio."

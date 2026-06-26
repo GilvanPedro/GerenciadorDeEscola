@@ -9,12 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DisciplinaDAO {
-    private final String ARQUIVO = "GerenciadorDeEscola/arquivos/materias.txt";
-    private final String IDENTIFICADOR = "GerenciadorDeEscola/arquivos/ultimo_identificador_materia.txt";
+    private final String ARQUIVO = "GerenciadorDeEscola/arquivos/disciplinas.txt";
+    private final String IDENTIFICADOR = "GerenciadorDeEscola/arquivos/ultimo_identificador_disciplina.txt";
 
     private GarantirRepositorio garantirRepositorio = new GarantirRepositorio();
 
-    // Listar as matérias
+    // Listar as disciplinas
     public List<Disciplina> listarDisciplinas() {
         List<Disciplina> disciplinas = new ArrayList<>();
 
@@ -46,7 +46,7 @@ public class DisciplinaDAO {
 
         try(BufferedWriter bw = new BufferedWriter(new FileWriter(ARQUIVO))){
             for(Disciplina d : disciplinas){
-                bw.write(d.toString());
+                bw.write(d.getId() + ";" + d.getDisciplina() + ";" + d.getNivelEnsino());
                 bw.newLine();
             }
         } catch (IOException e){

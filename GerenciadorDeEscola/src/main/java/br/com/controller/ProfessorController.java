@@ -15,7 +15,7 @@ public class ProfessorController {
     private ProfessorDAO professorDAO = new ProfessorDAO();
 
     // Listar os Professores
-    public void listar() {
+    public void listarProfessores() {
         List<Professor> professores = professorService.listarProfessores();
 
         if (professores.isEmpty()) {
@@ -76,6 +76,7 @@ public class ProfessorController {
     ){
         Professor professorExistente = BuscaPorId.buscarPorId(professorDAO.listarProfessor(), id);
 
+        // Verifica se o professor existe antes de enviar para outras verificações
         if(professorExistente == null){
             throw new IllegalArgumentException (
                     "Erro: Professor com o id: " + id + " não encontrado."

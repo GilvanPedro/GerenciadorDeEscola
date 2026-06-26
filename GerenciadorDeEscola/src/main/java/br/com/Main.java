@@ -1,18 +1,19 @@
 package br.com;
 
-import br.com.controller.ProfessorController;
-import br.com.dao.ProfessorDAO;
-
-import java.util.List;
+import br.com.controller.DisciplinaController;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        ProfessorController professorController = new ProfessorController();
-        ProfessorDAO dao = new ProfessorDAO();
+        DisciplinaController controller = new DisciplinaController();
 
-        System.out.println("\n======= Lista de Professores =======");
-        professorController.listar();
+        System.out.println();
+        System.out.println("========================================");
+        System.out.println("     LISTANDO DISCIPLINAS CADASTRADAS");
+        System.out.println("========================================");
+
+        // Listagem de todas as disciplinas
+        controller.listarDisciplina();
     }
 }

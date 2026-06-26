@@ -18,6 +18,11 @@ public class Pessoa {
         this.dataNascimento = LocalDate.parse(dataNascimentoTexto, FORMATADOR);
     }
 
+    public Pessoa(String nome, String dataNascimentoTexto) {
+        this.nome = nome;
+        this.dataNascimento = LocalDate.parse(dataNascimentoTexto, FORMATADOR);
+    }
+
     public String getNome() {
         return nome;
     }
