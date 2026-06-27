@@ -18,6 +18,17 @@ public class Responsavel extends Pessoa implements Identificador {
         this.alunosId = alunosId;
     }
 
+    public Responsavel(String nome, String cpf, String dataNascimentoTexto, String endereco, String telefone, List<Integer> alunosId) {
+        super(nome, cpf, dataNascimentoTexto);
+        this.endereco = endereco;
+        this.telefone = telefone;
+        this.alunosId = alunosId;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public int getId() {
         return id;
@@ -45,5 +56,23 @@ public class Responsavel extends Pessoa implements Identificador {
 
     public void setAlunosId(List<Integer> alunosId) {
         this.alunosId = alunosId;
+    }
+
+    @Override
+    public String toString() {
+        String alunos = (alunosId == null || alunosId.isEmpty())
+                ? "vazio"
+                : alunosId.stream()
+                .map(String::valueOf)
+                .reduce((a, b) -> a + "," + b)
+                .orElse("vazio");
+
+        return id + ";" +
+                getNome() + ";" +
+                getCpf() + ";" +
+                getDataNascimentoFormatada() + ";" +
+                endereco + ";" +
+                telefone + ";" +
+                alunos;
     }
 }

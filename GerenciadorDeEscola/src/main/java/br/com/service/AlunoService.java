@@ -1,7 +1,11 @@
 package br.com.service;
 
+import br.com.controller.ResponsavelController;
 import br.com.dao.AlunoDAO;
+import br.com.dao.ResponsavelDAO;
 import br.com.model.entity.Aluno;
+import br.com.model.entity.Responsavel;
+import br.com.util.BuscaPorId;
 import br.com.util.ValidarCpf;
 
 import java.util.List;
@@ -9,6 +13,8 @@ import java.util.List;
 public class AlunoService {
 
     private final AlunoDAO alunoDAO = new AlunoDAO();
+    private final ResponsavelDAO responsavelDAO = new ResponsavelDAO();
+    private final ResponsavelService responsavelService = new ResponsavelService();
 
     // Verificar as informações e depois salvar no arquivo
     public void adicionarAluno(Aluno aluno) {
@@ -16,8 +22,8 @@ public class AlunoService {
         List<Aluno> alunos = alunoDAO.listarAluno();
 
         // Validar se a matrícula está repetida
-        for(Aluno a : alunos){
-            if(a.getMatricula() == aluno.getMatricula()){
+        for (Aluno a : alunos) {
+            if (a.getMatricula() == aluno.getMatricula()) {
                 throw new IllegalArgumentException(
                         "Erro: A matrícula já está cadastrada, tente novamente, se o erro persistir, entre em contato com algum desenvolvedor"
                 );
@@ -25,14 +31,14 @@ public class AlunoService {
         }
 
         // Validar o Cpf
-        if(!ValidarCpf.validarCpf(aluno.getCpf())){
+        if (!ValidarCpf.validarCpf(aluno.getCpf())) {
             throw new IllegalArgumentException(
                     "Erro: O CPF é inválido"
             );
         }
 
         // Verificar por Cpf já cadastrado
-        if(ValidarCpf.validarDuplicidadeCPF(alunos, aluno.getCpf())){
+        if (ValidarCpf.validarDuplicidadeCPF(alunos, aluno.getCpf())) {
             throw new IllegalArgumentException(
                     "Erro: O CPF já está cadastrado"
             );
@@ -45,10 +51,26 @@ public class AlunoService {
             );
         }
 
+        // Verificar se cada responsável informado realmente existe
+        List<Responsavel> responsaveis = responsavelDAO.listarResponsaveis();
+        for (int responsavelId : aluno.getResponsavelId()) {
+            Responsavel encontrado = BuscaPorId.buscarPorId(responsaveis, responsavelId);
+            if (encontrado == null) {
+                throw new IllegalArgumentException(
+                        "Erro: Responsável com id " + responsavelId + " não encontrado."
+                );
+            }
+        }
+
         // Salvamento dos Alunos
         alunos.add(aluno);
         alunoDAO.salvar(alunos);
         alunoDAO.salvarUltimaMatricula(aluno.getMatricula());
+
+        // Vincula o aluno a cada responsável informado
+        for (int responsavelId : aluno.getResponsavelId()) {
+            responsavelService.adicionarAlunoAoResponsavel(responsavelId, aluno.getMatricula());
+        }
     }
 
     // Listar os Alunos
@@ -74,6 +96,17 @@ public class AlunoService {
             throw new IllegalArgumentException(
                     "Erro: aluno deve ter ao menos um responsável."
             );
+        }
+
+        // Verificar se cada responsável informado realmente existe
+        List<Responsavel> responsaveis = responsavelDAO.listarResponsaveis();
+        for (int responsavelId : alunoAtualizado.getResponsavelId()) {
+            Responsavel encontrado = BuscaPorId.buscarPorId(responsaveis, responsavelId);
+            if (encontrado == null) {
+                throw new IllegalArgumentException(
+                        "Erro: Responsável com id " + responsavelId + " não encontrado."
+                );
+            }
         }
 
         alunoDAO.editar(alunoAtualizado);

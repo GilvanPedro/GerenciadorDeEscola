@@ -1,0 +1,7 @@
+1;Maria da Silva;82724581016;15/03/1980;Rua das Flores, 123 - Goiânia/GO;(62) 99999-1111;26005
+2;João Pereira;36505741011;22/07/1975;Av. Goiás, 456 - Goiânia/GO;(62) 98888-2222;26006
+3;Maria da Silva;52998224725;15/03/1980;Rua das Flores, 123 - Goiânia/GO;(62) 99999-1111;vazio
+4;Fernanda Oliveira;71428793860;08/11/1990;Rua Serra Dourada, 78 - Aparecida de Goiânia/GO;(62) 97777-3333;vazio
+5;Júlia da Salvação;22214005005;15/03/1980;Rua das Flores, 123 - Goiânia/GO;(62) 99999-1111;26007
+6;João Marcelo;99030943025;22/07/1975;Av. Goiás, 456 - Goiânia/GO;(62) 98888-2222;vazio
+7;Fernanda Oliveira;48351636053;08/11/1990;Rua Serra Dourada, 78 - Aparecida de Goiânia/GO;(62) 97777-3333;26007
