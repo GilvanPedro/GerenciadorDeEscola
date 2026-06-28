@@ -112,6 +112,7 @@ public class AlunoDAO {
         salvar(alunos);
     }
 
+    // converter os responsáveis para lista de novo
     private List<Integer> converterResponsaveis(String texto) {
 
         List<Integer> ids = new ArrayList<>();
