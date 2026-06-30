@@ -59,6 +59,60 @@ public class TurmaDAO {
             e.printStackTrace();
         }
     }
+
+    // Remove uma turma pelo id
+    public void excluir(int id) {
+        List<Turma> turmas = listarTurmas();
+        turmas.removeIf(t -> t.getId() == id);
+        salvar(turmas);
+    }
+
+    // Edita as informações de uma turma já cadastrada
+    public void editar(Turma turmaAtualizada) {
+        List<Turma> turmas = listarTurmas();
+
+        for (int i = 0; i < turmas.size(); i++) {
+            if (turmas.get(i).getId() == turmaAtualizada.getId()) {
+                turmas.set(i, turmaAtualizada);
+                break;
+            }
+        }
+
+        salvar(turmas);
+    }
+
+    // Salva o valor do último id gerado
+    public void salvarUltimoId(int id) {
+        garantirRepositorio.criarDiretorio(IDENTIFICADOR);
+
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(IDENTIFICADOR))) {
+            bw.write(String.valueOf(id));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Obtém o valor do último id cadastrado
+    public int obterUltimoId() {
+        try (BufferedReader br = new BufferedReader(new FileReader(IDENTIFICADOR))) {
+            String linha = br.readLine();
+
+            if (linha != null) {
+                return Integer.parseInt(linha);
+            }
+
+        } catch (IOException e) {
+            return 0;
+        }
+
+        return 0;
+    }
+
+    // Retorna o caminho do arquivo de controle de id
+    public String caminhoUltimoId() {
+        return IDENTIFICADOR;
+    }
+
     // Converter para Enum Series
     public Series converterParaSerie(String texto){
         return Series.valueOf(texto.trim().toUpperCase());
@@ -76,13 +130,19 @@ public class TurmaDAO {
 
     // Converter o texto de volta para a lista dos ids do aluno
     private List<Integer> conveterAlunos(String texto) {
-
         List<Integer> ids = new ArrayList<>();
-        String[] partes = texto.split(",");
 
-        for (String id : partes) {
-            ids.add(Integer.parseInt(id));
+        if (texto == null || texto.isBlank() || texto.equals("vazio")) {
+            return ids;
         }
+
+        for (String parte : texto.split(",")) {
+            String trimmed = parte.trim();
+            if (!trimmed.isEmpty()) {
+                ids.add(Integer.parseInt(trimmed));
+            }
+        }
+
         return ids;
     }
 }
