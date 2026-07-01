@@ -6,6 +6,7 @@ import br.com.model.enums.Series;
 import br.com.model.enums.Turnos;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Turma implements Identificador {
     private int id;
@@ -73,5 +74,14 @@ public class Turma implements Identificador {
         this.alunosId = alunosId;
     }
 
-    // FAZER O TO STRING
+    @Override
+    public String toString() {
+        String alunos = (alunosId == null || alunosId.isEmpty())
+                ? "vazio"
+                : alunosId.stream()
+                .map(String::valueOf)
+                .collect(Collectors.joining(","));
+
+        return id + ";" + serie + ";" + turno + ";" + nivelEnsino + ";" + anoLetivo + ";" + alunos;
+    }
 }

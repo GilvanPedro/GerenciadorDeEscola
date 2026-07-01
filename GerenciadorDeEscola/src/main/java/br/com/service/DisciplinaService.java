@@ -2,15 +2,14 @@ package br.com.service;
 
 import br.com.dao.DisciplinaDAO;
 import br.com.model.entity.Disciplina;
-import br.com.util.BuscaPorId;
 import br.com.util.GerarId;
 
 import java.text.Normalizer;
+import java.time.LocalDate;
 import java.util.List;
 
 public class DisciplinaService {
     private final DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
-    private final BuscaPorId buscaPorId = new BuscaPorId();
 
     // Adicionar uma disciplina depois de fazer as verificações
     public void adicionarDisciplina(Disciplina disciplina){
