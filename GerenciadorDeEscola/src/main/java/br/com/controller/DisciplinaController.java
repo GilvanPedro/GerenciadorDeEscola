@@ -13,22 +13,11 @@ public class DisciplinaController {
     private DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
     private DisciplinaService disciplinaService = new DisciplinaService();
 
-    // Listar disciplina
-    public void listarDisciplina(){
+    // Lista as disciplinas cadastradas, prontas para exibição
+    public List<Disciplina> listarDisciplina(){
         List<Disciplina> disciplinas = disciplinaDAO.listarDisciplinas();
 
-        if(disciplinas.isEmpty()){
-            throw new IllegalArgumentException(
-                    "Erro: Nenhuma disciplina cadastrada"
-            );
-        }
-
-        for(Disciplina d : disciplinas){
-            System.out.println("-------------------");
-            System.out.println("ID:              " + d.getId());
-            System.out.println("Disciplina:      " + d.getDisciplina());
-            System.out.println("Nível de Ensino: " + d.getNivelEnsino().getDescricao());
-        }
+        return disciplinas;
     }
 
     // Adicionar Disciplina
@@ -65,6 +54,8 @@ public class DisciplinaController {
                 disciplina,
                 nivelEnsino
         );
+
+        disciplinaService.editarDisciplina(disciplinaAtualizada);
     }
 
     // Manda para o service excluir a disciplina

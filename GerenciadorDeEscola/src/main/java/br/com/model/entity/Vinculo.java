@@ -4,19 +4,30 @@ import br.com.model.Identificador;
 import br.com.model.enums.DiaSemana;
 import br.com.model.enums.PeriodoAula;
 
+import java.util.List;
+
 public class Vinculo implements Identificador {
     private int id;
-    private Professor professor;
-    private Disciplina disciplina;
-    private Turma turma;
+    private int professorId;
+    private List<Integer> disciplinaId;
+    private int turmaId;
     private DiaSemana diaSemana;
     private PeriodoAula periodoAula;
 
-    public Vinculo(int id, Professor professor, Disciplina disciplina, Turma turma, DiaSemana diaSemana, PeriodoAula periodoAula) {
+    public Vinculo(int id, int professorId, List<Integer> disciplinaId, int turmaId, DiaSemana diaSemana, PeriodoAula periodoAula) {
         this.id = id;
-        this.professor = professor;
-        this.disciplina = disciplina;
-        this.turma = turma;
+        this.professorId = professorId;
+        this.disciplinaId = disciplinaId;
+        this.turmaId = turmaId;
+        this.diaSemana = diaSemana;
+        this.periodoAula = periodoAula;
+    }
+
+    // Construtor sem id, usado antes de gerar o id no service
+    public Vinculo(int professorId, List<Integer> disciplinaId, int turmaId, DiaSemana diaSemana, PeriodoAula periodoAula) {
+        this.professorId = professorId;
+        this.disciplinaId = disciplinaId;
+        this.turmaId = turmaId;
         this.diaSemana = diaSemana;
         this.periodoAula = periodoAula;
     }
@@ -26,28 +37,32 @@ public class Vinculo implements Identificador {
         return id;
     }
 
-    public Professor getProfessor() {
-        return professor;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setProfessor(Professor professor) {
-        this.professor = professor;
+    public int getProfessorId() {
+        return professorId;
     }
 
-    public Disciplina getDisciplina() {
-        return disciplina;
+    public void setProfessorId(int professorId) {
+        this.professorId = professorId;
     }
 
-    public void setDisciplina(Disciplina disciplina) {
-        this.disciplina = disciplina;
+    public List<Integer> getDisciplinaId() {
+        return disciplinaId;
     }
 
-    public Turma getTurma() {
-        return turma;
+    public void setDisciplinaId(List<Integer> disciplinaId) {
+        this.disciplinaId = disciplinaId;
     }
 
-    public void setTurma(Turma turma) {
-        this.turma = turma;
+    public int getTurmaId() {
+        return turmaId;
+    }
+
+    public void setTurmaId(int turmaId) {
+        this.turmaId = turmaId;
     }
 
     public DiaSemana getDiaSemana() {
@@ -64,5 +79,22 @@ public class Vinculo implements Identificador {
 
     public void setPeriodoAula(PeriodoAula periodoAula) {
         this.periodoAula = periodoAula;
+    }
+
+    @Override
+    public String toString() {
+        String disciplinas = (disciplinaId == null || disciplinaId.isEmpty())
+                ? "vazio"
+                : disciplinaId.stream()
+                .map(String::valueOf)
+                .reduce((a, b) -> a + "," + b)
+                .orElse("vazio");
+
+        return id + ";" +
+                professorId + ";" +
+                disciplinas + ";" +
+                turmaId + ";" +
+                diaSemana + ";" +
+                periodoAula;
     }
 }

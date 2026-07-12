@@ -16,6 +16,7 @@ public class Aluno extends Pessoa{
         super(nome, cpf, dataNascimentoTexto);
         this.matricula = matricula;
         this.serie = serie;
+        this.turmaId = turmaId;
         this.situacao = situacao;
         this.responsavelId = responsavelId;
     }

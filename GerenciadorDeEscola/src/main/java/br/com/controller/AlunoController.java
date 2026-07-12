@@ -1,6 +1,7 @@
 package br.com.controller;
 
 import br.com.dao.ResponsavelDAO;
+import br.com.model.dto.AlunoExibicao;
 import br.com.model.entity.Aluno;
 import br.com.model.entity.Responsavel;
 import br.com.model.enums.SituacaoAluno;
@@ -9,6 +10,7 @@ import br.com.util.BuscaPorId;
 import br.com.util.BuscarAluno;
 import br.com.util.GeradorMatricula;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AlunoController {
@@ -42,43 +44,27 @@ public class AlunoController {
         alunoService.adicionarAluno(aluno);
     }
 
-    // Lista os alunos salvos
-    public void listarAlunos() {
+    // Monta a lista de alunos pronta para exibição, já com os responsáveis resolvidos
+    public List<AlunoExibicao> listarAlunos() {
         List<Aluno> alunos = alunoService.listarAlunos();
 
-        if (alunos.isEmpty()) {
-            throw new IllegalArgumentException(
-                    "Erro: Nenhum aluno cadastrado"
-            );
-        }
-
         List<Responsavel> todosResponsaveis = responsavelDAO.listarResponsaveis();
+        List<AlunoExibicao> exibicoes = new ArrayList<>();
 
         for (Aluno aluno : alunos) {
-            System.out.println("====================");
-            System.out.println("Matrícula:    " + aluno.getMatricula());
-            System.out.println("Nome:         " + aluno.getNome());
-            System.out.println("CPF:          " + aluno.getCpf());
-            System.out.println("Nascimento:   " + aluno.getDataNascimentoFormatada());
-            System.out.println("Série:        " + aluno.getSerie());
-            System.out.println("Situação:     " + aluno.getSituacao());
+            List<Responsavel> responsaveisDoAluno = new ArrayList<>();
 
-            List<Integer> ids = aluno.getResponsavelId();
-            System.out.println("---- Responsáveis ----");
-            for (int i = 0; i < ids.size(); i++) {
-                Responsavel r = BuscaPorId.buscarPorId(todosResponsaveis, ids.get(i));
+            for (int responsavelId : aluno.getResponsavelId()) {
+                Responsavel r = BuscaPorId.buscarPorId(todosResponsaveis, responsavelId);
                 if (r != null) {
-                    System.out.println("  " + (i + 1) + ". " + r.getNome());
-                    System.out.println("     CPF:        " + r.getCpf());
-                    System.out.println("     Nascimento: " + r.getDataNascimentoFormatada());
-                    System.out.println("     Endereço:   " + r.getEndereco());
-                    System.out.println("     Telefone:   " + r.getTelefone());
-                } else {
-                    System.out.println("  " + (i + 1) + ". Responsável não encontrado (id: " + ids.get(i) + ")");
+                    responsaveisDoAluno.add(r);
                 }
             }
+
+            exibicoes.add(new AlunoExibicao(aluno, responsaveisDoAluno));
         }
-        System.out.println("====================");
+
+        return exibicoes;
     }
 
     // Editar um aluno já cadastrado

@@ -2,6 +2,7 @@ package br.com.controller;
 
 import br.com.dao.AlunoDAO;
 import br.com.dao.TurmaDAO;
+import br.com.model.dto.TurmaExibicao;
 import br.com.model.entity.Aluno;
 import br.com.model.entity.Turma;
 import br.com.model.enums.NivelEnsino;
@@ -19,50 +20,31 @@ public class TurmaController {
     private TurmaService turmaService = new TurmaService();
     private AlunoDAO alunoDAO = new AlunoDAO();
 
-    // Listar turmas
-    public void listarTurma(){
+    // Monta a lista de turmas pronta para exibição, já com os alunos matriculados resolvidos
+    public List<TurmaExibicao> listarTurma(){
         List<Turma> turmas = turmaDAO.listarTurmas();
 
-        if(turmas.isEmpty()){
-            throw new IllegalArgumentException(
-                    "Erro: Nenhuma turma cadastrada"
-            );
-        }
-
         List<Aluno> todosAlunos = alunoDAO.listarAluno();
+        List<TurmaExibicao> exibicoes = new ArrayList<>();
 
         for(Turma t : turmas){
-            System.out.println("-------------------");
-            System.out.println("ID:              " + t.getId());
-            System.out.println("Série:           " + t.getSerie().getDescricao());
-            System.out.println("Turno:           " + t.getTurno().getDescricao());
-            System.out.println("Nível de Ensino: " + t.getNivelEnsino().getDescricao());
-            System.out.println("Ano Letivo:      " + t.getAnoLetivo());
+            List<Aluno> alunosDaTurma = new ArrayList<>();
 
-            System.out.println("---- Alunos ----");
-            if(t.getAlunosId().isEmpty()){
-                System.out.println("  Nenhum aluno matriculado");
-            } else {
-                int i = 1;
-                for(int alunoId : t.getAlunosId()){
-                    Aluno aluno = todosAlunos.stream()
-                            .filter(a -> a.getMatricula() == alunoId)
-                            .findFirst()
-                            .orElse(null);
+            for(int alunoId : t.getAlunosId()){
+                Aluno aluno = todosAlunos.stream()
+                        .filter(a -> a.getMatricula() == alunoId)
+                        .findFirst()
+                        .orElse(null);
 
-                    if(aluno != null){
-                        System.out.println("  " + i + ". " + aluno.getNome());
-                        System.out.println("     Matrícula:  " + aluno.getMatricula());
-                        System.out.println("     CPF:        " + aluno.getCpf());
-                        System.out.println("     Nascimento: " + aluno.getDataNascimentoFormatada());
-                        System.out.println("     Situação:   " + aluno.getSituacao());
-                    } else {
-                        System.out.println("  " + i + ". Aluno não encontrado (matrícula: " + alunoId + ")");
-                    }
-                    i++;
+                if(aluno != null){
+                    alunosDaTurma.add(aluno);
                 }
             }
+
+            exibicoes.add(new TurmaExibicao(t, alunosDaTurma));
         }
+
+        return exibicoes;
     }
 
     // Adicionar turma
@@ -118,5 +100,15 @@ public class TurmaController {
     // Manda para o service excluir a turma
     public void excluirTurma(int id){
         turmaService.excluirTurma(id);
+    }
+
+    // Adiciona um aluno já existente à turma (ação rápida na aba de Turmas)
+    public void adicionarAlunoNaTurma(int turmaId, int alunoMatricula){
+        turmaService.adicionarAlunoNaTurma(turmaId, alunoMatricula);
+    }
+
+    // Remove um aluno da turma (ação rápida na aba de Turmas)
+    public void removerAlunoDaTurma(int turmaId, int alunoMatricula){
+        turmaService.removerAlunoDaTurma(turmaId, alunoMatricula);
     }
 }

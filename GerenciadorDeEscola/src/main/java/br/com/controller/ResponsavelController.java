@@ -1,12 +1,14 @@
 package br.com.controller;
 
 import br.com.dao.ResponsavelDAO;
+import br.com.model.dto.ResponsavelExibicao;
 import br.com.model.entity.Aluno;
 import br.com.model.entity.Responsavel;
 import br.com.service.ResponsavelService;
 import br.com.util.BuscaPorId;
 import br.com.util.BuscarAluno;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ResponsavelController {
@@ -14,46 +16,29 @@ public class ResponsavelController {
     private final ResponsavelService responsavelService = new ResponsavelService();
     private final ResponsavelDAO responsavelDAO = new ResponsavelDAO();
 
-    // Listar os Responsáveis
-    public void listarResponsaveis() {
+    // Monta a lista de responsáveis pronta para exibição, já com os alunos vinculados resolvidos
+    public List<ResponsavelExibicao> listarResponsaveis() {
         List<Responsavel> responsaveis = responsavelService.listarResponsaveis();
 
-        if (responsaveis.isEmpty()) {
-            throw new IllegalArgumentException(
-                    "Erro: Nenhum responsável cadastrado"
-            );
-        }
+        List<ResponsavelExibicao> exibicoes = new ArrayList<>();
 
         for (Responsavel responsavel : responsaveis) {
-            System.out.println("====================");
-            System.out.println("ID:           " + responsavel.getId());
-            System.out.println("Nome:         " + responsavel.getNome());
-            System.out.println("CPF:          " + responsavel.getCpf());
-            System.out.println("Nascimento:   " + responsavel.getDataNascimentoFormatada());
-            System.out.println("Endereço:     " + responsavel.getEndereco());
-            System.out.println("Telefone:     " + responsavel.getTelefone());
+            List<Aluno> alunosDoResponsavel = new ArrayList<>();
 
             List<Integer> matriculas = responsavel.getAlunosId();
-            if (matriculas == null || matriculas.isEmpty()) {
-                System.out.println("---- Alunos: Nenhum aluno vinculado");
-            } else {
-                System.out.println("---- Alunos ----");
-                for (int i = 0; i < matriculas.size(); i++) {
-                    Aluno aluno = BuscarAluno.buscarPorMatricula(matriculas.get(i));
+            if (matriculas != null) {
+                for (int matricula : matriculas) {
+                    Aluno aluno = BuscarAluno.buscarPorMatricula(matricula);
                     if (aluno != null) {
-                        System.out.println("  " + (i + 1) + ". " + aluno.getNome());
-                        System.out.println("     Matrícula:  " + aluno.getMatricula());
-                        System.out.println("     CPF:        " + aluno.getCpf());
-                        System.out.println("     Nascimento: " + aluno.getDataNascimentoFormatada());
-                        System.out.println("     Série:      " + aluno.getSerie());
-                        System.out.println("     Situação:   " + aluno.getSituacao());
-                    } else {
-                        System.out.println("  " + (i + 1) + ". Aluno não encontrado (matrícula: " + matriculas.get(i) + ")");
+                        alunosDoResponsavel.add(aluno);
                     }
                 }
             }
+
+            exibicoes.add(new ResponsavelExibicao(responsavel, alunosDoResponsavel));
         }
-        System.out.println("====================");
+
+        return exibicoes;
     }
 
     // Adicionar um responsável e enviar para as verificações no service

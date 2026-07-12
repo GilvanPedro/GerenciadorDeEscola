@@ -58,8 +58,9 @@ public class DisciplinaService {
 
         List<Disciplina> disciplinas = disciplinaDAO.listarDisciplinas();
 
-        // Verificar nome duplicado
+        // Verificar nome duplicado (ignorando a própria disciplina que está sendo editada)
         boolean nomeIgual = disciplinas.stream()
+                .filter(d -> d.getId() != disciplinaEditada.getId())
                 .anyMatch(d -> normalizar(d.getDisciplina()).equals(normalizar(disciplinaEditada.getDisciplina())));
 
         if(nomeIgual){
